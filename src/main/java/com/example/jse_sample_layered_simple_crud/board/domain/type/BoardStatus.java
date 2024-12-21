@@ -7,10 +7,4 @@ public enum BoardStatus {
     ACTIVE,
     SUSPENDED,
     REMOVED;
-
-    private static final Set<BoardStatus> GENERAL_QUERY_STATUS = EnumSet.of(ACTIVE, SUSPENDED);
-
-    public static Set<BoardStatus> getGeneralQueryStatus() {
-        return GENERAL_QUERY_STATUS;
-    }
 }
