@@ -25,8 +25,10 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	// database
-	runtimeOnly("org.postgresql:postgresql:42.7.4")
-	testRuntimeOnly("com.h2database:h2")
+	runtimeOnly("org.postgresql:postgresql")
+
+	// flyway
+	implementation("org.flywaydb:flyway-core:9.22.3")
 
 	// lombok
 	compileOnly("org.projectlombok:lombok")

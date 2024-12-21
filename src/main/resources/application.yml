@@ -1,10 +1,9 @@
 spring:
-  application.name: sample-layered-simple-crud
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DEMO_POSTGRESQL_URL}
-    username: ${DEMO_POSTGRESQL_USERNAME}
-    password: ${DEMO_POSTGRESQL_PASSWORD}
+    url: jdbc:postgresql://localhost:5433/demo
+    username: root
+    password: root
 
     # connection pool (usage: hikari pool)
     hikari:
@@ -20,11 +19,11 @@ spring:
       hibernate:
         format-sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true # profile ?? ? ?? ??? ? ??? ??? true ?.
+    show-sql: true
     hibernate:
-      ddl-auto: none # flyway ???? none ?? validate (??? ?? validate)
+      ddl-auto: none
 
   flyway:
-    baseline-on-migrate: true # flyway schema history ???? ??? ????.
+    baseline-on-migrate: true
     locations:
       - classpath:db/migration/v1_0
