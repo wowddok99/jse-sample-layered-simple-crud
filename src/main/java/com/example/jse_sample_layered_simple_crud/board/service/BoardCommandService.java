@@ -1,5 +1,6 @@
 package com.example.jse_sample_layered_simple_crud.board.service;
 
+import com.example.jse_sample_layered_simple_crud.board.exception.BoardCommandErrorCode;
 import com.example.jse_sample_layered_simple_crud.board.repository.BoardQueryRepository;
 import com.example.jse_sample_layered_simple_crud.board.repository.projection.BoardProjection.*;
 import com.example.jse_sample_layered_simple_crud.board.usecase.BoardSelectOneUseCase;
@@ -13,6 +14,6 @@ public class BoardCommandService implements BoardSelectOneUseCase {
     @Override
     public BoardDetailProjection findById(Long id) {
         return boardQueryRepository.findBoardById(id)
-                .orElseThrow(() -> new RuntimeException("id에 해당하는 board가 존재하지 않습니다."));
+                .orElseThrow(BoardCommandErrorCode.BOARD_NOT_FOUND::defaultException);
     }
 }
