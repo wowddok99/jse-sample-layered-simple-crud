@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Builder
@@ -26,4 +27,17 @@ public class Board extends BaseEntity {
     private int dislikeCount;
     private Instant createdAt;
     private Instant updatedAt;
+
+    @Builder(
+            builderClassName = "UpdateBoardBuilder",
+            builderMethodName = "prepareUpdate",
+            buildMethodName = "update"
+    )
+    public void updateBoard(String title, String content) {
+        Objects.requireNonNull(title, "title cannot be null");
+        Objects.requireNonNull(content, "content cannot be null");
+
+        this.title = title;
+        this.content = content;
+    }
 }
