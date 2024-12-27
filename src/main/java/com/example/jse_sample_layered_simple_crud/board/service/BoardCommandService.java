@@ -1,19 +1,33 @@
 package com.example.jse_sample_layered_simple_crud.board.service;
 
-import com.example.jse_sample_layered_simple_crud.board.exception.BoardCommandErrorCode;
-import com.example.jse_sample_layered_simple_crud.board.repository.BoardQueryRepository;
-import com.example.jse_sample_layered_simple_crud.board.repository.projection.BoardProjection.*;
-import com.example.jse_sample_layered_simple_crud.board.usecase.BoardSelectOneUseCase;
+import com.example.jse_sample_layered_simple_crud.board.controller.dto.BoardCommandDto.BoardCreateRequest;
+import com.example.jse_sample_layered_simple_crud.board.domain.Board;
+import com.example.jse_sample_layered_simple_crud.board.domain.type.BoardStatus;
+import com.example.jse_sample_layered_simple_crud.board.mapper.BoardDtoMapper;
+import com.example.jse_sample_layered_simple_crud.board.repository.BoardCommandRepository;
+import com.example.jse_sample_layered_simple_crud.board.usecase.BoardCreateUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
-public class BoardCommandService implements BoardSelectOneUseCase {
-    private final BoardQueryRepository boardQueryRepository;
+public class BoardCommandService implements BoardCreateUseCase {
+    private final BoardCommandRepository boardCommandRepository;
+    private final BoardDtoMapper mapper;
+
     @Override
-    public BoardDetailProjection findById(Long id) {
-        return boardQueryRepository.findBoardById(id)
-                .orElseThrow(BoardCommandErrorCode.BOARD_NOT_FOUND::defaultException);
+    public Board create(Board board) {
+        return boardCommandRepository.save(board);
+    }
+
+    @Override
+    public Board create(BoardCreateRequest request) {
+        Instant now = Instant.now();
+
+        Board board = mapper.toEntity(request, BoardStatus.ACTIVE, now, now);
+
+        return create(board);
     }
 }
